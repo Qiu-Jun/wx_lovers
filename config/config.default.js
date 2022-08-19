@@ -60,6 +60,11 @@ module.exports = appInfo => {
         // 我申请的天行的appKey 最好自己申请, 次数超了大家都用不了()
         tianxing: {
             appKey: 'bcaddf1605dd53c3115c5a709082ac6f'
+        },
+        // 青云客傻瓜ai聊条
+        aiChat: {
+            key: 'free',
+            appid: '0'
         }
     }
 

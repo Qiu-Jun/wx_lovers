@@ -49,14 +49,12 @@ class WxNotify extends Service {
         let reply
         switch (MsgType) {
             case 'text': // 文本
-                switch (Content) {
-                    case '发送消息':
-                        await service.wxNotify.snedNotify()
-                        reply = '发送成功'
-                        break;
-                    default:
-                        reply = Content
-                        break;
+                if(Content === '手动发送模板') {
+                    await service.wxNotify.snedNotify()
+                    reply = '发送成功'
+                } else {
+                    const aiText = await service.notifyUtils.sendAiText(Content)
+                    reply = aiText
                 }
                 break;
             case 'image': // 图片
