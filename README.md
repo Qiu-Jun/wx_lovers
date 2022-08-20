@@ -75,7 +75,7 @@ npm run start
 ![如图](./gitPic/template.jpg)
 
 ## 对接api实现
-> 用的和原项目一样都是[天行](第三方用的都是https://www.tianapi.com/), 具体申请看=>[原项目的md](https://github.com/erwanjun/weixin_tuisong).我原项目的基础上用redis进行了缓存减少请求次数
+> 用的和原项目一样都是[天行](第三方用的都是https://www.tianapi.com/), 具体申请看=>[原项目的md](https://github.com/erwanjun/weixin_tuisong).我在原项目的基础上用redis进行了缓存减少请求次数
 
 消息推送有三种方式
 + 调用接口推送(/sendNotify)
