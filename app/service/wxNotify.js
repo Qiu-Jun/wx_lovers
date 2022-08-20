@@ -10,7 +10,8 @@ class WxNotify extends Service {
      * @param { Object } message 
      */
     async handleEvent(message) {
-        const { FromUserName, Event, EventKey, Ticket, Latitude, Longitude, Precision } = message;
+        const { service } = this
+        const { Event, EventKey, Ticket, Latitude, Longitude, Precision } = message;
         let reply;
         switch (Event) {
             case 'subscribe': // 关注事件
@@ -26,7 +27,15 @@ class WxNotify extends Service {
                 reply = 'Latitude:' + Latitude + ', Longitude:' + Longitude + ', Precision:' + Precision;
                 break;
             case 'CLICK': // 点击
-                reply = 'EventKey:' + EventKey;
+                switch (EventKey) {
+                    case 'HANDLE_SEND_TEMDPLATE':
+                        await this.snedNotify()
+                        reply = ''
+                        break;
+                    default:
+                        reply = '点击事件配置错误';
+                        break;
+                }
                 break;
             case 'VIEW': // 点击菜单跳转链接时的事件推送
                 reply = 'EventKey:' + EventKey;
@@ -51,7 +60,7 @@ class WxNotify extends Service {
             case 'text': // 文本
                 if(Content === '发送模板') {
                     await service.wxNotify.snedNotify()
-                    reply = '发送成功'
+                    reply = ''
                 } else {
                     const aiText = await service.notifyUtils.sendAiText(Content)
                     reply = aiText

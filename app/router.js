@@ -11,6 +11,8 @@ module.exports = app => {
 
     router.get('/onWx', controller.wx.verify); // 验证微信消息
     router.get('/getAccessToken', controller.wx.getAccessToken) // 获取getAccessToken
-    router.post('/onWx', xml2js, controller.wx.onListen) // 
-    router.post('/sendNotify', controller.wx.sendNotify)
+    router.post('/onWx', xml2js, controller.wx.onListen) // 监听微信消息
+    router.post('/sendNotify', controller.wx.sendNotify) // 发送模板
+
+    router.get('/createMenu', controller.wx.createWxMenu) // 创建公众号菜单  因为没有后台管理系统，菜单配置再utils下的menuJson
 };

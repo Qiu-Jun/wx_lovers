@@ -37,6 +37,8 @@ class HomeController extends Controller {
         if (reply) {
             const result = await service.wxNotify.replyMsg(message, reply)
             ctx.body = result
+        } else {
+            ctx.body = 'success'
         }
     }
 
@@ -44,6 +46,11 @@ class HomeController extends Controller {
     async sendNotify() {
         const { service } = this
         await service.wxNotify.snedNotify()
+    }
+
+    async createWxMenu() {
+        const { service } = this
+        await service.wx.createMenu()
     }
 
     test() {

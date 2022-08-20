@@ -4,7 +4,7 @@
 const Service = require('egg').Service;
 const crypto = require('crypto')
 const wxBase = 'https://api.weixin.qq.com/cgi-bin'
-
+const menus = require('../../utils/menuJson.js')
 class Wechat extends Service {
 
     /**
@@ -56,6 +56,31 @@ class Wechat extends Service {
             return res.data.data.openid
         } else {
             return null
+        }
+    }
+
+    // 公众号创建自定义菜单
+    async createMenu() {
+        try {
+            const { ctx, app } = this
+            const accessToken = await this.getAccessToken()
+            if(!accessToken) throw new Error('accessToken错误')
+            const res = await app.curl(`${wxBase}/menu/create?access_token=${accessToken}`, {
+                method: 'post',
+                dataType: 'json',
+                data: JSON.stringify(menus)
+            })
+            if(res.data.errcode === 0) {
+                ctx.ok({
+                    msg: '自定义成功'
+                })
+            } else {
+                ctx.fail({
+                    msg: '自定义失败'
+                })
+            }
+        } catch (error) {
+            throw new Error(error)
         }
     }
 }
