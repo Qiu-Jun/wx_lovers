@@ -49,7 +49,7 @@ class WxNotify extends Service {
         let reply
         switch (MsgType) {
             case 'text': // 文本
-                if(Content === '手动发送模板') {
+                if(Content === '发送模板') {
                     await service.wxNotify.snedNotify()
                     reply = '发送成功'
                 } else {

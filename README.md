@@ -1,9 +1,14 @@
 
 > 这个项目原项目是py的，后在小红书网友想要node版本的，所以做了一个。[原项目](https://github.com/erwanjun/weixin_tuisong)
 
+#### 功能
+- [ ] 定时消息推送/手动消息推动
+- [ ] 人工智障ai聊天
+
+
 #### 准备环境
 + redis
-> 解决第三方接口频繁请求次数的问题，像第三方天气接口时有次数限制的, 而且一天请求一次就好,window用户可以用phpstudy方便;linux可以用宝塔;mac的话百度也挺简单的, phpstudy也有mac版本的,但是我没用过,我mac的redis是自己手动安装的
+> 解决第三方接口频繁请求次数的问题，像第三方天气接口时有次数限制的, 而且一天请求一次就好,window用户可以用phpstudy方便安装;linux可以用宝塔安装;mac的话百度, phpstudy也有mac版本的,但是我没用过,我mac的redis是自己手动安装的
 + 花生壳
 > 为了内网穿透做域名校验,注册就送一个免费的域名,够玩. 当然内网穿透工具并不只有这个,也可以用其他的.这里用花生壳内网穿透到本地的服务端口，理论上只要你电脑不关机，花生壳不挂，那么这个服务可以一直就这么使用,可以节约成本
 + 启动项目
@@ -40,7 +45,7 @@ npm install
 npm run start
 ```
 + 公众号配置
-<p style="color: #f34250;">主要: 只有启动了服务端才可以配置这里</p>
+<p style="color: #f34250;">注意: 只有启动了服务端才可以配置这里, 另外域名换成你自己的域名，即https://www.xxxx.com/onWx</p>
 
 ![如图](./gitPic/wxConfig.jpg)
 
@@ -71,6 +76,11 @@ npm run start
 
 ## 对接api实现
 > 用的和原项目一样都是[天行](第三方用的都是https://www.tianapi.com/), 具体申请看=>[原项目的md](https://github.com/erwanjun/weixin_tuisong).我原项目的基础上用redis进行了缓存减少请求次数
+
+消息推送有三种方式
++ 调用接口推送(/sendNotify)
++ 自动推送(每天早上八点)
++ 通过公众号发送'发送模板'这个关键字
 
 
 ## 最后
