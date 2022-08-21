@@ -53,6 +53,12 @@ class HomeController extends Controller {
         await service.wx.createMenu()
     }
 
+    async clearRedis() {
+        const { service, ctx } = this
+        await service.redisModule.flushall()
+        ctx.ok()
+    }
+
     test() {
         const { ctx, app } = this
         console.log("==================================")

@@ -15,4 +15,6 @@ module.exports = app => {
     router.post('/sendNotify', controller.wx.sendNotify) // 发送模板
 
     router.get('/createMenu', controller.wx.createWxMenu) // 创建公众号菜单  因为没有后台管理系统，菜单配置再utils下的menuJson
+
+    router.get('/clearRedis', controller.wx.clearRedis) // 清除redis
 };
