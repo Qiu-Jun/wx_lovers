@@ -1,6 +1,8 @@
 
 > 这个项目原项目是py的，后在小红书网友想要node版本的，所以做了一个。[原项目](https://github.com/erwanjun/weixin_tuisong)
 
+[<font size="5" color="#f34250">关于想部署的人请先进里面看看，尤其是第一点和第二点</font>](./Q%26A.md)
+
 #### 功能
 - [x] 定时消息推送/手动消息推动
 - [x] 人工智障ai聊天
