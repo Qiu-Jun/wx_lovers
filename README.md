@@ -42,6 +42,7 @@ config.apiConfig = {
 # 把项目拉或者下载到本地,然后在项目目录启动终端
 npm install 
 npm run start
+# 当环境配置好  可以直接双击starServer.bat启动服务  双击stopServer.bat停止服务
 ```
 + 公众号配置
 <p style="color: #f34250;">注意: 只有启动了服务端才可以配置这里, 另外域名换成你自己的域名，即https://www.xxxx.com/onWx</p>
