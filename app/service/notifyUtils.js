@@ -73,7 +73,7 @@ class NotifyUtils extends Service {
                 })
                 if(res.data.code === 200) {
                     const wetherData = res.data['newslist'][0] || null
-                    await service.redisModule.set('cacheWether', wetherData, 24 * 60 * 60)
+                    await service.redisModule.set('cacheWether', wetherData, 8 * 60 * 60)
                     return wetherData
                 } else {
                     throw new Error('获取天气失败')
