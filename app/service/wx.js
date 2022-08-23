@@ -97,12 +97,12 @@ class Wechat extends Service {
             const { app } = this
             const accessToken = await this.getAccessToken()
             if(!accessToken) throw new Error('accessToken错误')
-            const res = await app.curl(`${wxBase}/menu/create?access_token=${accessToken}`, {
+            const res = await app.curl(`${wxBase}/clear_quota?access_token=${accessToken}`, {
                 method: 'post',
                 dataType: 'json',
-                data: {
+                data: JSON.stringify({
                     appid: app.config.wx.appId
-                }
+                })
             })
             const errcode = res.data.errcode
             if(errcode === 0) {
