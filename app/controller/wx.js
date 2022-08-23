@@ -59,14 +59,22 @@ class HomeController extends Controller {
         ctx.ok()
     }
 
+    async clearquota() {
+        const { ctx, service } = this
+        const res = await service.wx.clearQuota()
+        if(res) {
+            ctx.ok({
+                msg: res
+            })
+        }
+    }
+
     test() {
-        const { ctx, app } = this
-        console.log("==================================")
+        const { ctx } = this
         ctx.ok({
             code: 200,
             data: {
-                randomHexColor: randomHexColor(),
-                wxASToken: app.wxASToken || null
+                randomHexColor: randomHexColor()
             }
         })
     }

@@ -45,17 +45,24 @@ class Wechat extends Service {
 
     // 获取关注用户
     async getUsers() {
-        const { app } = this
-        const accessToken = await this.getAccessToken()
-        if(!accessToken) throw new Error('accessToken错误')
-        const res = await app.curl(`${wxBase}/user/get?access_token=${accessToken}`, {
-            method: 'GET',
-            dataType: 'json'
-        })
-        if(res.status === 200 && res.data) {
-            return res.data.data.openid
+        const { app, service } = this
+        const cacheUsersOpenid = await service.redisModule.get('cacheUsersOpenid')
+        if(cacheUsersOpenid) {
+            return cacheUsersOpenid
         } else {
-            return null
+            const accessToken = await this.getAccessToken()
+            if(!accessToken) throw new Error('accessToken错误')
+            const res = await app.curl(`${wxBase}/user/get?access_token=${accessToken}`, {
+                method: 'GET',
+                dataType: 'json'
+            })
+            if(res.status === 200 && res.data) {
+                const openids = res.data.data.openid
+                await service.redisModule.set('cacheUsersOpenid', openids, 7180)
+                return openids
+            } else {
+                return null
+            }
         }
     }
 
@@ -65,7 +72,7 @@ class Wechat extends Service {
             const { ctx, app } = this
             const accessToken = await this.getAccessToken()
             if(!accessToken) throw new Error('accessToken错误')
-            const res = await app.curl(`${wxBase}/menu/create?access_token=${accessToken}`, {
+            const res = await app.curl(`${wxBase}/clear_quota?access_token=${accessToken}`, {
                 method: 'post',
                 dataType: 'json',
                 data: JSON.stringify(menus)
@@ -81,6 +88,36 @@ class Wechat extends Service {
             }
         } catch (error) {
             throw new Error(error)
+        }
+    }
+
+    // 清除模板频繁限制  每个月10次
+    async clearQuota() {
+        try {
+            const { app } = this
+            const accessToken = await this.getAccessToken()
+            if(!accessToken) throw new Error('accessToken错误')
+            const res = await app.curl(`${wxBase}/menu/create?access_token=${accessToken}`, {
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    appid: app.config.wx.appId
+                }
+            })
+            const errcode = res.data.errcode
+            if(errcode === 0) {
+                return '清除成功'
+            } else if(errcode === 48006) {
+                return '一个月10次的机会用完了'
+            } else if(errcode === 40013) {
+                return 'appid写错了；或者填入的 appid 与access_token代表的账号的 appid 不一致'
+            } else if(errcode === 47001) {
+                return '您无需清除'
+            } else {
+                throw new Error('请求失败')
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 }

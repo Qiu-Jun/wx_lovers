@@ -17,4 +17,5 @@ module.exports = app => {
     router.get('/createMenu', controller.wx.createWxMenu) // 创建公众号菜单  因为没有后台管理系统，菜单配置再utils下的menuJson
 
     router.get('/clearRedis', controller.wx.clearRedis) // 清除redis
+    router.get('/clearQuota', controller.wx.clearquota) // 清除45009接口调用频率限制
 };
