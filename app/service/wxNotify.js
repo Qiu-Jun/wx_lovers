@@ -123,7 +123,7 @@ class WxNotify extends Service {
             const weather = await service.notifyUtils.getWether()
             // 获取关注用户
             const users = await service.wx.getUsers()
-            if(!users) return ctx.ok('暂无用户')
+            if(!users) return ctx.ok({fail: '获取关注用户失败，可能频繁操作出现了限制，请调用clearQuota接口清除'})
             const data = {
                 date: {
                     value: curWeek,

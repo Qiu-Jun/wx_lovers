@@ -45,24 +45,18 @@ class Wechat extends Service {
 
     // 获取关注用户
     async getUsers() {
-        const { app, service } = this
-        const cacheUsersOpenid = await service.redisModule.get('cacheUsersOpenid')
-        if(cacheUsersOpenid) {
-            return cacheUsersOpenid
+        const accessToken = await this.getAccessToken()
+        if(!accessToken) throw new Error('accessToken错误')
+        const res = await app.curl(`${wxBase}/user/get?access_token=${accessToken}`, {
+            method: 'GET',
+            dataType: 'json'
+        })
+        if(res.status === 200 && res.data) {
+            const openids = res.data.data.openid
+            await service.redisModule.set('cacheUsersOpenid', openids, 2 * 60) // 2分钟
+            return openids
         } else {
-            const accessToken = await this.getAccessToken()
-            if(!accessToken) throw new Error('accessToken错误')
-            const res = await app.curl(`${wxBase}/user/get?access_token=${accessToken}`, {
-                method: 'GET',
-                dataType: 'json'
-            })
-            if(res.status === 200 && res.data) {
-                const openids = res.data.data.openid
-                await service.redisModule.set('cacheUsersOpenid', openids, 7180)
-                return openids
-            } else {
-                return null
-            }
+            return null
         }
     }
 
