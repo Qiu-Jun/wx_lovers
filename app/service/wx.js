@@ -53,7 +53,6 @@ class Wechat extends Service {
         })
         if(res.status === 200 && res.data) {
             const openids = res.data.data.openid
-            await service.redisModule.set('cacheUsersOpenid', openids, 2 * 60) // 2分钟
             return openids
         } else {
             return null
