@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>处理异常</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 120px;
+        }
+    </style>
+    <script crossorigin="anonymous" integrity="sha512-PhuYrdDBtBeUjY7KTmjRYFFadw8uXXdTmzZyhCHZewYsqZJ0pxFCwU528jRoil42LXMW3ksegQT5zdjkfiR1IA==" src="https://lib.baomitu.com/vue/2.7.7/vue.min.js"></script>
+</head>
+<body>
+    <div class="box" id="box">
+        <button @click="handleClick">当你频繁操作，导致无法发送版本时，请点击</button>
+    </div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+<script>
+!(function () {
+
+    const canvas = document.createElement("canvas")
+    document.body.append(canvas)
+    const ctx = canvas.getContext('2d')
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+    }
+
+    function clearCanvas() {
+        ctx.fillStyle = "#000"
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+    }
+
+    resizeCanvas()
+    clearCanvas()
+
+    window.addEventListener('resize', resizeCanvas)
+
+    function mouseDownHandler(e) {
+        const x = e.clientX
+        const y = e.clientY
+        createFireworks(x, y)
+    }
+    document.addEventListener('mousedown', mouseDownHandler, false)
+
+    const particles = [] // 烟花
+    function createFireworks(sx, sy) {
+        const hue = Math.floor(Math.random() * 51) + 150
+        const hueVariance = 30
+        const count = 100
+        for(let i = 0; i < count; i ++) {
+            const angle = 360 / count * i
+            const sr = (Math.random() * 5) + .4
+            const p ={
+                x: sx,
+                y: sy,
+                radians: angle * Math.PI / 180,
+                size: Math.floor(Math.random() * 3) + 1,
+                speed: sr,
+                radius: sr,
+                hue: Math.floor(Math.random() * ((hue + hueVariance) - (hue - hueVariance))) + (hue - hueVariance),
+                brightness: Math.floor(Math.random() * 31) + 50,
+                alpha: (Math.floor(Math.random() * 61) + 40) / 100
+            }
+            particles.push(p)
+        }
+    }
+    function drawFireworks() {
+        clearCanvas()
+        for(let i = 0; i < particles.length; i ++) {
+            const p = particles[i]
+            const vx = Math.cos(p.radians) * p.radius
+            const vy = Math.sin(p.radians) * p.radius + 0.4
+            p.x += vx
+            p.y += vy
+            p.radius *= 1 - p.speed / 100
+            p.alpha -= 0.005
+            if(p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
+                particles.slice(i, 1)
+                continue
+            }
+            ctx.beginPath()
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2, false)
+            ctx.closePath()
+            ctx.fillStyle = `hsla(${p.hue}, 100%, ${p.brightness}%, ${p.alpha})`
+            ctx.fill()
+        }
+    }
+
+    // requestAnimationFrame
+    function tick() {
+        ctx.globalCompositeOperation = 'destination-out'
+        ctx.fillStyle = `rgba(0, 0, 0, 0.1)`
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.globalCompositeOperation = 'lighter'
+        drawFireworks()
+        requestAnimationFrame(tick)
+    }
+    tick()
+    // 	setInterval(function () {
+    // 		createFireworks(Math.random() * canvas.width, Math.random()
+    // 			* canvas.height);
+    // 	}, 1000);
+})()
+
+new Vue({
+    el: '#box',
+    methods: {
+        handleClick() {
+            axios.get('http://127.0.0.1:7001/clearQuota')
+                .then(res => {
+                    if(res.status === 200 && res.data.code === 200) {
+                        alert('操作成功')
+                    } else {
+                        alert(res.data.msg)
+                    }
+                })
+        }
+    }
+})
+</script>
+</html>

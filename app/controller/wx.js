@@ -1,6 +1,9 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const amapData = require('../../utils/amap.js')
+const fs = require('fs')
+const jsonPath = './utils/usercity.json'
 
 class HomeController extends Controller {
     async verify() {
@@ -69,14 +72,28 @@ class HomeController extends Controller {
         }
     }
 
-    test() {
-        const { ctx } = this
-        ctx.ok({
-            code: 200,
-            data: {
-                randomHexColor: randomHexColor()
-            }
-        })
+    async setCity() {
+        const { ctx, service } = this
+        try {
+            const { city } = ctx.query
+            if(!city) return ctx.fail({msg: '设置失败'})
+            const findCity = amapData.find(i => i.adname === city)
+            if(!findCity) return ctx.fail({msg: '没有找到城市'})
+            fs.writeFileSync(jsonPath, JSON.stringify(findCity), 'utf8')
+            const a= await service.redisModule.get('cacheWether')
+            console.log(a)
+            await service.redisModule.del('cacheWether')
+            const b= await service.redisModule.get('cacheWether')
+            console.log(b)
+            ctx.ok({msg: '设置成功'})
+        } catch (error) {
+            ctx.fail({msg: error})
+        }
+    }
+
+    async test() {
+        const { ctx, app } = this
+        ctx.ok({data: app.config.userData, msg: '测试接口成功'})
     }
 }
 

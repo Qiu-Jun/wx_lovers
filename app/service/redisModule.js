@@ -20,6 +20,18 @@ class RedisService extends Service {
         data = JSON.parse(data);
         return data;
     }
+
+    // 删除
+    async del(key) {
+        try {
+            const { redis } = this.app
+            await redis.del(key)
+            return true
+        } catch (error) {
+            return false
+        }
+    }
+
     // 清空redis
     async flushall() {
         const { redis } = this.app;

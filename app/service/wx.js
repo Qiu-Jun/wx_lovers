@@ -45,6 +45,7 @@ class Wechat extends Service {
 
     // 获取关注用户
     async getUsers() {
+        const { app } = this 
         const accessToken = await this.getAccessToken()
         if(!accessToken) throw new Error('accessToken错误')
         const res = await app.curl(`${wxBase}/user/get?access_token=${accessToken}`, {

@@ -6,7 +6,8 @@
 #### 功能
 - [x] 定时消息推送/手动消息推动
 - [x] 人工智障ai聊天
-- [ ] 更换第三方天气接口
+- [x] 更换第三方天气接口(高德天气，无需担心次数上限的白嫖问题)
+- [x] 通过接口设置城市，方便修改城市重新获取天气(设置城市会直接清除天气缓存，目前天气缓存为10分钟)
 
 #### 准备环境
 + redis
@@ -66,14 +67,13 @@ npm run start
 {{date.DATA}}
 城市：{{city.DATA}}
 天气：{{weather.DATA}}
-最低气温: {{min_temperature.DATA}}
-最高气温: {{max_temperature.DATA}}
-降雨概率：{{pop.DATA}}
-今日建议：{{tips.DATA}}
+气温：{{temperature.DATA}}
+空气湿度：{{humidity.DATA}}
 今天是我们恋爱的第{{love_day.DATA}}天
 距离小宝生日还有{{gfBirthDays.DATA}}天
 距离我的生日还有{{mineBirthDays.DATA}}天
 寄言： {{lizhi.DATA}}
+{{caihongpi.DATA}}
 ```
 
 ![如图](./gitPic/template.jpg)
@@ -121,10 +121,11 @@ npm run start
 
 ![](./gitPic/t10.jpg)
 
-## 对接api实现
-> 用的和原项目一样都是[天行](第三方用的都是https://www.tianapi.com/), 具体申请看=>[原项目的md](https://github.com/erwanjun/weixin_tuisong).我在原项目的基础上用redis进行了缓存减少请求次数
+## 需要申请的第三方api
++ 高德天气[点这里](https://lbs.amap.com/api/webservice/guide/api/weatherinfo)
++ 天行数据api[点这里](https://www.tianapi.com/)
 
-消息推送有三种方式
+## 消息推送有三种方式
 + 调用接口推送(/sendNotify)
 + 自动推送(每天早上八点)
 + 通过公众号发送'发送模板'这个关键字

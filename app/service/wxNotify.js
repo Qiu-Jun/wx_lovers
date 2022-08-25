@@ -3,6 +3,7 @@ const Service = require('egg').Service;
 const { createXml } = require('../../utils/xml2js');
 const randomHexColor = require('../../utils/randomHexColor')
 
+
 class WxNotify extends Service {
     /**
      * handleEvent
@@ -113,44 +114,46 @@ class WxNotify extends Service {
         try {
             const { ctx, app, service } = this
             const accessToken = await service.wx.getAccessToken()
-            const { mineBirth, gfBirth, loveDay, city } = app.config.userData
+            const { mineBirth, gfBirth, loveDay } = app.config.userData
+            const { words } = app.config
             const curStand = Date.now()
             const curWeek = service.notifyUtils.getWeek() // 星期几
             const lovsDays = service.notifyUtils.getTogetherDays(curStand, loveDay) // 在一起天数
             const mineBirthDays= service.notifyUtils.birthDays(mineBirth) // 距离我的生日时间
             const gfBirthDays = service.notifyUtils.birthDays(gfBirth)
-            const lizhiWord = await service.notifyUtils.getLizhi()
-            const weather = await service.notifyUtils.getWether()
-            // 获取关注用户
+            const weather = await service.notifyUtils.getWether() // 获取天气
+            const caihongpi = await service.notifyUtils.getCaihongPi() // 获取彩虹屁
+            let lizhiWord = ''
+            if(words.length) {
+                lizhiWord = words[Math.floor(Math.random() * words.length)]
+            } else {
+                lizhiWord = await service.notifyUtils.getLizhi() // 励志古言
+            }
+            if(!weather) {
+                throw new Error("推送失败，获取天气失败")
+            }
             const users = await service.wx.getUsers()
-            if(!users) return ctx.ok({fail: '获取关注用户失败，可能频繁操作出现了限制，请调用clearQuota接口清除'})
+            // 获取关注用户
+            if(!users) return ctx.fail({fail: '获取关注用户失败，可能频繁操作出现了限制，请调用clearQuota接口清除'})
             const data = {
                 date: {
                     value: curWeek,
                     color: randomHexColor()
                 },
                 city: {
-                    value: city,
+                    value: weather.city,
                     color: randomHexColor()
                 },
                 weather: {
                     value: weather.weather,
                     color: randomHexColor()
                 },
-                min_temperature: {
-                    value: weather.lowest,
+                temperature: {
+                    value: weather.temperature ? `${weather.temperature}°C` : '暂无数据',
                     color: randomHexColor()
                 },
-                max_temperature: {
-                    value: weather.highest,
-                    color: randomHexColor()
-                },
-                pop: {
-                    value: weather.pop + '%',
-                    color: randomHexColor()
-                },
-                tips: {
-                    value: weather.tips,
+                humidity: {
+                    value: weather.humidity,
                     color: randomHexColor()
                 },
                 love_day: {
@@ -166,7 +169,11 @@ class WxNotify extends Service {
                     color: randomHexColor()
                 },
                 lizhi: {
-                    value: lizhiWord,
+                    value: lizhiWord || '暂无数据',
+                    color: randomHexColor()
+                },
+                caihongpi: {
+                    value: caihongpi ? caihongpi.content : '暂无数据',
                     color: randomHexColor()
                 }
             }

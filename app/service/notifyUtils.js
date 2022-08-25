@@ -3,10 +3,12 @@ const Service = require('egg').Service;
 const WEEKS  = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
 const dayjs = require('dayjs')
 const apiUrl = {
+    gdWether: 'https://restapi.amap.com/v3/weather/weatherInfo',
     tianxing: 'http://api.tianapi.com',
-    aitext: 'http://api.qingyunke.com/api.php'
+    aitext: 'http://api.qingyunke.com/api.php',
+    words: 'https://v1.hitokoto.cn'
 }
-
+const fs = require('fs')
 class NotifyUtils extends Service {
     // 星期几
     getWeek() {
@@ -35,27 +37,14 @@ class NotifyUtils extends Service {
     // 获取随机励志吉言
     async getLizhi() {
         try {
-            const { app, service } = this
-            const cacheLizhi = await service.redisModule.get('cacheLizhi')
-            if(cacheLizhi) {
-                return cacheLizhi
-            } else {
-                // 不缓存 每天100次
-                const res = await app.curl(`${apiUrl.tianxing}/lzmy/index?key=${app.config.apiConfig.tianxing.appKey}`, {
-                    method: 'GET',
-                    dataType: 'json'
-                })
-                if(res.data.code === 200) {
-                    const word = res.data['newslist'][0]['saying'] || ''
-                    await service.redisModule.set('cacheLizhi', word, 20 * 60) // 20分钟
-                    return word
-                } else {
-                    return '暂无数据'
-                }
-            }
+            const { app } = this
+            const res = await app.curl(apiUrl.words, {
+                method: 'GET',
+                dataType: 'json'
+            })
+            return res.data.hitokoto || null
         } catch (error) {
-            console.log(error)
-            throw new Error('获取随机励志吉言失败')
+            return null
         }
     }
 
@@ -67,23 +56,51 @@ class NotifyUtils extends Service {
             if(cacheWether) {
                 return cacheWether
             } else {
-                const res = await app.curl(`${apiUrl.tianxing}/tianqi/index?key=${app.config.apiConfig.tianxing.appKey}&city=${app.config.userData.city}`, {
+                let cityData = fs.readFileSync('./utils/usercity.json', 'utf8')
+                cityData = cityData ? JSON.parse(cityData) : null
+                if(!cityData) return null
+                const res = await app.curl(`${apiUrl.gdWether}`, {
                     method: 'GET',
-                    dataType: 'json'
+                    dataType: 'json',
+                    data: {
+                        key: app.config.apiConfig.amap.appKey,
+                        city: app.config.userData.city,
+                        city: cityData.adcode
+                    }
                 })
-                if(res.data.code === 200) {
-                    const wetherData = res.data['newslist'][0] || null
-                    await service.redisModule.set('cacheWether', wetherData, 8 * 60 * 60)
-                    return wetherData
+                
+                if(res.status === 200 && res.data.status === '1') {
+                    const wether = res.data.lives[0]
+                    await service.redisModule.set('cacheWether', wether, 10 * 60) // 10分钟
+                    return wether
                 } else {
-                    throw new Error('获取天气失败')
+                    return null
                 }
             }
             
         } catch (error) {
             console.log(error)
-            throw new Error('获取随机励志吉言失败')
+            return null
         }
+    }
+
+    // 获取彩虹屁
+    async getCaihongPi() {
+        try {
+            const { app } = this
+            const res = await app.curl(`${apiUrl.tianxing}/caihongpi/index?key=${app.config.apiConfig.tianxingKey}`, {
+                method: 'GET',
+                dataType: 'json'
+            })
+            if(res.status === 200 && res.data.code === 200) {
+                return res.data.newslist[0]
+            } else {
+                return null
+            }
+        } catch (error) {
+            return null
+        }
+        
     }
 
     // aiText
