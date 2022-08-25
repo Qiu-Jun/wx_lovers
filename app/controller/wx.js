@@ -80,11 +80,7 @@ class HomeController extends Controller {
             const findCity = amapData.find(i => i.adname === city)
             if(!findCity) return ctx.fail({msg: '没有找到城市'})
             fs.writeFileSync(jsonPath, JSON.stringify(findCity), 'utf8')
-            const a= await service.redisModule.get('cacheWether')
-            console.log(a)
             await service.redisModule.del('cacheWether')
-            const b= await service.redisModule.get('cacheWether')
-            console.log(b)
             ctx.ok({msg: '设置成功'})
         } catch (error) {
             ctx.fail({msg: error})
