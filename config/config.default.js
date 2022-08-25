@@ -71,6 +71,9 @@ module.exports = appInfo => {
   // 寄言 一旦设置了就不会请求接口，在这里随机返送一条
   config.words = ['为所欲为', '为非作歹', '歹？？？？？？？？？？？？？、']
 
+  // 手动设置彩虹屁
+  config.caihongpi = []
+
   return {
     ...config,
     ...userConfig,

@@ -93,7 +93,7 @@ class NotifyUtils extends Service {
                 dataType: 'json'
             })
             if(res.status === 200 && res.data.code === 200) {
-                return res.data.newslist[0]
+                return res.data.newslist[0].content
             } else {
                 return null
             }

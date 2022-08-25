@@ -123,7 +123,9 @@ npm run start
 
 ## 需要申请的第三方api
 + 高德天气[点这里](https://lbs.amap.com/api/webservice/guide/api/weatherinfo)
-+ 天行数据api[点这里](https://www.tianapi.com/)
++ 天行数据api[点这里](https://www.tianapi.com/)(如果你两个都手动设置，那么可以不用申请天行)
+    - 励志古言(如果设置了config.words那么可以不申请这个)
+    - 彩虹屁(如果设置了config.words那么可以不申请这个)
 
 ## 消息推送有三种方式
 + 调用接口推送(/sendNotify)

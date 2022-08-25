@@ -41,7 +41,7 @@ class Wechat extends Service {
     });
     const token = getAccessToken.data.access_token;
     // 7200秒过期，提前
-    await service.redisModule.set('accessToken', token, 7180);
+    await service.redisModule.set('accessToken', token, 7080);
     return token;
 
   }
@@ -93,6 +93,7 @@ class Wechat extends Service {
     try {
       const { app } = this;
       const accessToken = await this.getAccessToken();
+      console.log(accessToken)
       if (!accessToken) throw new Error('accessToken错误');
       const res = await app.curl(`${wxBase}/clear_quota?access_token=${accessToken}`, {
         method: 'post',
@@ -110,6 +111,8 @@ class Wechat extends Service {
         return 'appid写错了；或者填入的 appid 与access_token代表的账号的 appid 不一致';
       } else if (errcode === 47001) {
         return '您无需清除';
+      } else if(errcode === 40001) {
+          await  this.getAccessToken();
       }
       throw new Error('请求失败');
 

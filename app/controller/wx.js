@@ -47,8 +47,12 @@ class HomeController extends Controller {
 
     // 发送订阅通知
     async sendNotify() {
-        const { service } = this
-        await service.wxNotify.snedNotify()
+        try {
+            const { service } = this
+            await service.wxNotify.snedNotify()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async createWxMenu() {

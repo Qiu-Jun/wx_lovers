@@ -115,15 +115,21 @@ class WxNotify extends Service {
             const { ctx, app, service } = this
             const accessToken = await service.wx.getAccessToken()
             const { mineBirth, gfBirth, loveDay } = app.config.userData
-            const { words } = app.config
+            const { words, caihongpi } = app.config
             const curStand = Date.now()
             const curWeek = service.notifyUtils.getWeek() // 星期几
             const lovsDays = service.notifyUtils.getTogetherDays(curStand, loveDay) // 在一起天数
             const mineBirthDays= service.notifyUtils.birthDays(mineBirth) // 距离我的生日时间
             const gfBirthDays = service.notifyUtils.birthDays(gfBirth)
             const weather = await service.notifyUtils.getWether() // 获取天气
-            const caihongpi = await service.notifyUtils.getCaihongPi() // 获取彩虹屁
+            let chp = ''
             let lizhiWord = ''
+            if(caihongpi.length) {
+                chp = caihongpi[Math.floor(Math.random() * caihongpi.length)]
+            } else {
+                chp = await service.notifyUtils.getCaihongPi() // 获取彩虹屁
+            }
+           
             if(words.length) {
                 lizhiWord = words[Math.floor(Math.random() * words.length)]
             } else {
@@ -173,7 +179,7 @@ class WxNotify extends Service {
                     color: randomHexColor()
                 },
                 caihongpi: {
-                    value: caihongpi ? caihongpi.content : '暂无数据',
+                    value: chp ? chp : '',
                     color: randomHexColor()
                 }
             }
@@ -209,6 +215,7 @@ class WxNotify extends Service {
                 }
             }
         } catch (error) {
+            console.log(error)
             throw new Error(error)
         }
     }
