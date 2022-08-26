@@ -20,26 +20,38 @@
 // 信息配置在config/config.default.js
 // 公众号配置
 config.wx = {
-    appId: 'wx6a908ab36533ea40', // 公众号appid
-    appSecret: '76d09eb43886a44cf2bb993c99206934', // 公众号密钥
-    token: 'junetext', // 公众号接口配置token
-    template_id: 'Z9NaV8KlzSR8-AA7Mb22PjqI1dwq0xggxeMUEjDbhGg', // 推送的模板id
-    user: 'wx6a908ab36533ea40' // 公众号appid
-}
+    appId: 'wx6a908ab36533ea40',
+    appSecret: '76d09eb43886a44cf2bb993c992069345',
+    token: '随便填，但非中文，不要太短即可,这个token需要配置到公众号那边的',
+    template_id: 'z864JohHWpBSFdsoz-6lVx8r0kS_v0LIYYJ7TEzrupg', // 推送的模板id
+    user: 'wx6a908ab36533ea40', // 并非推送用户, 填appid就行了
+};
 
 config.userData = {
-    mineBirth: '1994-03-24', // 自己的生日
-    gfBirth: '1994-12-26', // 女朋友的生日
-    loveDay: '2007-08-11', // 在一起的日期
-    city: '广州' // 获取天气使用
+    mineBirth: "1994-03-24", // 自己的生日
+    gfBirth: "1994-12-26", // 女朋友的生日
+    loveDay: "2007-08-11", // 在一起的日期
+    weatherCity: '茂名市' // 需要获取天气的城市，必须时xx市，xx县，xx自治区, 详细可以去utils/amap.js搜索到就可以，比如广州市，不能是广州
 }
 
 // 第三方
 config.apiConfig = {
-    tianxing: {
-        appKey: 'bcaddf1605dd53c3115c5a709082ac6f '
-    }
-}
+    tianxingKey: 'xxbcaddf10279841f45a8e9f0e4xx',
+    amap: {
+        appKey: 'xxb6d95720160279841f45a8e9xx',
+    },
+    // 青云客傻瓜ai聊天
+    aiChat: {
+        key: 'free',
+        appid: '0',
+    },
+};
+
+// 寄言 一旦设置了就不会请求接口，在这里随机返送一条
+config.words = ['为所欲为', '为非作歹', '歹？？？？？？？？？？？？？、']
+
+// 手动设置彩虹屁 一旦设置了就不会请求接口，在这里随机返送一条
+config.caihongpi = []
 ```
 ```bash
 # 先确定你启动了redis和安装了node
