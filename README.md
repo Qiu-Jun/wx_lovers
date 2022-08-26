@@ -79,47 +79,14 @@ npm run start
 ![如图](./gitPic/template.jpg)
 
 ## 关于定时推送
-> `app/schedule/sendTemplate.js`目前是通过eggjs的定时任务实现的, 在linux, window以及mac下都可以正常运行。目前配置是每天8点推送，[cron表达式请看](http://cron.ciding.cc/)。下面是利用window配置批处理文件执行发送（打不开图片的可以把下面下载下去，在gitPic目录看t0-t10的图片）
+> `app/schedule/sendTemplate.js`目前是通过eggjs的定时任务实现的, 在linux, window以及mac下都可以正常运行。目前配置是每天8点推送，[cron表达式请看](http://cron.ciding.cc/)
 
-+ 因为不需要用node的定时任务，所以我们先注释
+[<font size="4" color="#f34250">window用户可以点击这个教程利用win自身的计划任务程序执行脚本推送消息</font>](https://juneqiu.gitee.io/blog_build/blogs/other/winPlanWork.html)
 
-![](./gitPic/t0.jpg)
 
-+ 找到window的控制面板在控制面板中找到管理工具
++ 因为不需要用node的定时任务，所以我们先把app/schedule下的`sendTemplate.js`删了
 
-![](./gitPic/t1.jpg)
 
-+ 创建基本任务
-
-![](./gitPic/t3.jpg)
-
-+ 创建基本任务02
-
-![](./gitPic/t4.jpg)
-
-+ 配置任务向导
-
-![](./gitPic/t5.jpg)
-
-+ 配置任务向导02
-
-![](./gitPic/t6.jpg)
-
-+ 启动程序
-
-![](./gitPic/t7.jpg)
-
-+ 配置bat目录
-
-![](./gitPic/t8.jpg)
-
-+ 创建任务完成
-
-![](./gitPic/t9.jpg)
-
-+ 在属性配置执行权限
-
-![](./gitPic/t10.jpg)
 
 ## 需要申请的第三方api
 + 高德天气[点这里](https://lbs.amap.com/api/webservice/guide/api/weatherinfo)
