@@ -60,6 +60,17 @@ npm install
 npm run start
 # 当环境配置好  可以直接双击starServer.bat启动服务  双击stopServer.bat停止服务
 # 如果要使用sendTemplate.bat发送模板选哟修改里面的 请求地址为你自己的地址  curl  你的地址/sendNotify -X POST
+
+
+####  以下启动方法只适用window用户
+# 1.启动phpstudy, 在界面首页启动redis
+# 2.启动服务，双击startServer.bat脚本
+# 3.打开网云穿登录，点击启动内网穿透
+
+# // 修改配置后重启
+# 1.修改完config/config.default.js后需要重启才能生效
+# 2.停止服务 双击stopServer.bat脚本工具
+# 3.启动服务 双击startServer.bat脚本工具
 ```
 + 公众号配置
 <p style="color: #f34250;">注意: 只有启动了服务端才可以配置这里, 另外域名换成你自己的域名，即https://www.xxxx.com/onWx</p>
