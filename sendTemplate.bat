@@ -1,1 +1,8 @@
-curl  https://3k2j857423.goho.co/sendNotify -X POST
+CHCP 65001
+@echo off
+
+echo ***********************脚本执行中**********************
+curl -X POST http://127.0.0.1:7001/sendNotify
+echo ***********************脚本执行结束**********************
+echo 脚本执行完成，随便按结束
+exit
