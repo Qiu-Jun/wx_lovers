@@ -24,11 +24,11 @@
 // 信息配置在config/config.default.js
 // 公众号配置
 config.wx = {
-    appId: 'wx6a908ab36533ea40',
-    appSecret: '76d09eb43886a44cf2bb993c992069345',
+    appId: '公众号appid', // 公众号appid
+    appSecret: '公众号密钥', // 公众号密钥
     token: '随便填，但非中文，不要太短即可,这个token需要配置到公众号那边的',
-    template_id: 'z864JohHWpBSFdsoz-6lVx8r0kS_v0LIYYJ7TEzrupg', // 推送的模板id
-    user: 'wx6a908ab36533ea40', // 并非推送用户, 填appid就行了
+    template_id: 'z864JohHWpBSFdsoz-6lVx8r0kS_v0LIYYJ7TEzru', // 推送的模板id
+    user: '', // 并非推送用户, 可不填
 };
 
 config.userData = {
