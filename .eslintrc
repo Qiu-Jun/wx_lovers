@@ -1,4 +1,8 @@
 {
   "extends": "eslint-config-egg",
-  "root": true
+  "root": true,
+  "rules": {
+    "indent": "4",
+    "object-curly-spacing": "off"
+  }
 }
