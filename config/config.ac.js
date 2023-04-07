@@ -8,6 +8,8 @@
  */
 
 module.exports = () => {
+    const config = exports = {};
+
     // 公众号配置
     config.wx = {
         appId: process.env.WXAPPID,
