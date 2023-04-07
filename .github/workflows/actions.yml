@@ -2,8 +2,7 @@ name: Timer
 
 on:
 	schedule:
-		# UTC 时间 0 点运行一次
-		- cron: '0 0 * * *'
+		- cron: '0 0 8 ? * ?'
 	workflow_dispatch:
 
 jobs:
