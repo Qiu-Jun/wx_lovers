@@ -22,3 +22,5 @@ on:
     - TEMPLATEID 微信公众号的模板id
     - TIANXINGKEY 第三方天行的的key
     - AMAPKEY 地图的key，用于获取天气
+
++ 配置信息
