@@ -39,7 +39,6 @@ module.exports = () => {
     config.caihongpi = []
 
     return {
-        ...config,
-        ...userConfig,
+        ...config
     };
 };
