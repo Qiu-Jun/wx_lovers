@@ -31,7 +31,7 @@ class Wechat extends Service {
      */
   async getAccessToken() {
     const { app, service } = this;
-    const hasAccessToken = await service.redisModule.get('accessToken');
+    const hasAccessToken = app.wxToken || '';
     if (hasAccessToken) {
       return hasAccessToken;
     }
@@ -40,8 +40,9 @@ class Wechat extends Service {
       dataType: 'json',
     });
     const token = getAccessToken.data.access_token;
+    app.wxToken = token
     // 7200秒过期，提前
-    await service.redisModule.set('accessToken', token, 7080);
+    // await service.redisModule.set('accessToken', token, 7080);
     return token;
 
   }

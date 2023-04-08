@@ -2,8 +2,8 @@
 
 /** @type Egg.EggPlugin */
 module.exports = {
-    redis: {
-        enable: true,
-        package: 'egg-redis',
-    },
+    // redis: {
+    //     enable: true,
+    //     package: 'egg-redis',
+    // },
 };

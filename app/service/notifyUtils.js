@@ -52,31 +52,26 @@ class NotifyUtils extends Service {
     async getWether() {
         try {
             const { app, service } = this
-            const cacheWether = await service.redisModule.get('cacheWether')
-            if(cacheWether) {
-                return cacheWether
-            } else {
-                let cityData = fs.readFileSync('./utils/usercity.json', 'utf8')
-                cityData = cityData ? JSON.parse(cityData) : null
-                if(!cityData) return null
-                const res = await app.curl(`${apiUrl.gdWether}`, {
-                    method: 'GET',
-                    dataType: 'json',
-                    data: {
-                        key: app.config.apiConfig.amap.appKey,
-                        city: app.config.userData.city,
-                        city: cityData.adcode
-                    }
-                })
-                
-                if(res.status === 200 && res.data.status === '1') {
-                    const wether = res.data.lives[0]
-                    await service.redisModule.set('cacheWether', wether, 10 * 60) // 10分钟
-                    return wether
-                } else {
-                    return null
+            // let cityData = fs.readFileSync('./utils/usercity.json', 'utf8')
+            let cityData = app.config.userCity || null
+            if(!cityData) return null
+            const res = await app.curl(`${apiUrl.gdWether}`, {
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    key: app.config.apiConfig.amap.appKey,
+                    city: app.config.userData.city,
+                    city: cityData.adcode
                 }
+            })
+            
+            if(res.status === 200 && res.data.status === '1') {
+                const wether = res.data.lives[0]
+                return wether
+            } else {
+                return null
             }
+            
             
         } catch (error) {
             console.log(error)

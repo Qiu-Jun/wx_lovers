@@ -2,8 +2,8 @@
 
 const Controller = require('egg').Controller;
 const amapData = require('../../utils/amap.js')
-const fs = require('fs')
-const jsonPath = './utils/usercity.json'
+// const fs = require('fs')
+// const jsonPath = './utils/usercity.json'
 
 class HomeController extends Controller {
     async verify() {
@@ -77,14 +77,15 @@ class HomeController extends Controller {
     }
 
     async setCity() {
-        const { ctx, service } = this
+        const { ctx, app, service } = this
         try {
             const { city } = ctx.query
             if(!city) return ctx.fail({msg: '设置失败'})
             const findCity = amapData.find(i => i.adname === city)
             if(!findCity) return ctx.fail({msg: '没有找到城市'})
-            fs.writeFileSync(jsonPath, JSON.stringify(findCity), 'utf8')
-            await service.redisModule.del('cacheWether')
+            // fs.writeFileSync(jsonPath, JSON.stringify(findCity), 'utf8')
+            // await service.redisModule.del('cacheWether')
+            app.config.userCity = findCity
             ctx.ok({msg: '设置成功'})
         } catch (error) {
             ctx.fail({msg: error})

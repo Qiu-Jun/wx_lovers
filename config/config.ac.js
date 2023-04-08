@@ -7,6 +7,7 @@
  * @param {Egg.EggAppInfo} appInfo app info
  */
 
+console.log(process)
 module.exports = () => {
     const config = exports = {};
 

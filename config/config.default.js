@@ -1,3 +1,4 @@
+
 /* eslint valid-jsdoc: "off" */
 
 'use strict';
@@ -23,19 +24,19 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
-  config.redis = {
-    client: {
-      port: 6379, // Redis port
-      host: '127.0.0.1', // Redis host
-      password: '',
-      db: 0,
-    },
-  };
+  // config.redis = {
+  //   client: {
+  //     port: 6379, // Redis port
+  //     host: '127.0.0.1', // Redis host
+  //     password: '',
+  //     db: 0,
+  //   },
+  // };
 
   // 正式项目要开启
   config.security = {
     csrf: {
-		    enable: false,
+		  enable: false,
     },
   };
 
@@ -45,7 +46,7 @@ module.exports = appInfo => {
     appSecret: '76d09eb43886a44cf2bb993c99206934',
     token: 'junetext',
     template_id: 'z864JohHWpBSFdsoz-6lVx8r0kS_v0LIYYJ7TEzrupg', // 推送的模板id
-    user: 'wx6a908ab36533ea40', // 并非推送用户, 填appid就行了
+    user: '', // 并非推送用户, 填appid就行了
   };
 
   config.userData = {
@@ -53,6 +54,11 @@ module.exports = appInfo => {
     gfBirth: "1994-12-26", // 女朋友的生日
     loveDay: "2007-08-11", // 在一起的日期
     weatherCity: '茂名市' // 需要获取天气的城市，必须时xx市，xx县，xx自治区, 详细可以去utils/amap.js搜索到就可以，比如广州市，不能是广州
+  }
+
+  config.userCity = {
+    "adname":"高州市",
+    "adcode":"440981"
   }
 
   // 第三方
