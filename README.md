@@ -12,10 +12,6 @@
 - [x] 人工智障ai聊天
 - [x] 更换第三方天气接口(高德天气，无需担心次数上限的白嫖问题)
 - [x] 通过接口设置城市，方便修改城市重新获取天气(设置城市会直接清除天气缓存，目前天气缓存为10分钟)
-- [x] github action部署
-
-#### github action部署
-[关于github action请查看](./docs/githubAction.md)
 
 #### 准备环境
 + redis
