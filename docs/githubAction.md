@@ -3,6 +3,30 @@ github action 可以设置运行环境`ubuntu`, `windows`和`macOs`, 设置windo
 
 + 首先fork仓库到你自己的github帐号
 
++ 设置日期和地区
+```javascript
+// 信息配置在config/config.default.js
+
+config.userData = {
+    mineBirth: "1994-03-24", // 自己的生日
+    gfBirth: "1994-12-26", // 女朋友的生日
+    loveDay: "2007-08-11", // 在一起的日期
+    weatherCity: '茂名市' // 需要获取天气的城市，必须时xx市，xx县，xx自治区, 详细可以去utils/amap.js搜索到就可以，比如广州市，不能是广州
+}
+
+// adCode：复制你的城市字符串如茂名市，然后在utils/amap.js下查找到你城市
+config.userCity = {
+    "adname":"茂名市",
+    "adcode":"440900"
+}
+
+// 寄言 一旦设置了就不会请求接口，在这里随机返送一条 ['语句一', '语句二']
+config.words = []
+
+// 手动设置彩虹屁 一旦设置了就不会请求接口，在这里随机返送一条
+config.caihongpi = []
+```
+
 + 设置定时任务的时间
 ```yml
 # 修改文件位置 .github/workflows/actions.yml的cron 
