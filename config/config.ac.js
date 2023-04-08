@@ -7,7 +7,6 @@
  * @param {Egg.EggAppInfo} appInfo app info
  */
 
-console.log(process)
 module.exports = () => {
     const config = exports = {};
 
@@ -17,7 +16,7 @@ module.exports = () => {
         appSecret: process.env.WXSECRET,
         token: process.env.WXTOKEN,
         template_id: process.env.TEMPLATEID, // 推送的模板id
-        user: ''
+        user: 'xx'
     };
 
     // 第三方

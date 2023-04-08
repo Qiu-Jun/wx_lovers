@@ -40,15 +40,6 @@ module.exports = appInfo => {
     },
   };
 
-  // 公众号配置
-  config.wx = {
-    appId: 'wx6a908ab36533ea40',
-    appSecret: '76d09eb43886a44cf2bb993c99206934',
-    token: 'junetext',
-    template_id: 'z864JohHWpBSFdsoz-6lVx8r0kS_v0LIYYJ7TEzrupg', // 推送的模板id
-    user: '', // 并非推送用户, 填appid就行了
-  };
-
   config.userData = {
     mineBirth: "1994-03-24", // 自己的生日
     gfBirth: "1994-12-26", // 女朋友的生日
@@ -60,19 +51,6 @@ module.exports = appInfo => {
     "adname":"高州市",
     "adcode":"440981"
   }
-
-  // 第三方
-  config.apiConfig = {
-    tianxingKey: 'bcaddf1605dd53c3115c5a709082ac6f',
-    amap: {
-      appKey: 'ad8bb6d95720160279841f45a8e9f0e4',
-    },
-    // 青云客傻瓜ai聊天
-    aiChat: {
-      key: 'free',
-      appid: '0',
-    },
-  };
 
   // 寄言 一旦设置了就不会请求接口，在这里随机返送一条
   config.words = ['为所欲为', '为非作歹', '歹？？？？？？？？？？？？？、']
