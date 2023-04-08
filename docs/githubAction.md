@@ -10,8 +10,8 @@ github action 可以设置运行环境`ubuntu`, `windows`和`macOs`, 设置windo
 ...
 on:
 	schedule:
-		# UTC 时间 0 点运行一次
-		- cron: '0 0 * * *'
+		# 每天早上六点
+		- cron: '0 0 6 ? * *'
 ...
 ```
 
@@ -22,5 +22,3 @@ on:
     - TEMPLATEID 微信公众号的模板id
     - TIANXINGKEY 第三方天行的的key
     - AMAPKEY 地图的key，用于获取天气
-
-+ 测试
