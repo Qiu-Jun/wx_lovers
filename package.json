@@ -7,7 +7,6 @@
     "declarations": true
   },
   "dependencies": {
-    "color-gradient-picker-vue3": "^0.1.4",
     "dayjs": "^1.11.5",
     "egg": "^2",
     "egg-redis": "^2.4.0",
