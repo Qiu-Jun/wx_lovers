@@ -33,7 +33,7 @@ module.exports = () => {
     };
 
     // 寄言 一旦设置了就不会请求接口，在这里随机返送一条
-    config.words = ['我设置了config.words, 01', '我设置了config.words, 02']
+    config.words = []
 
     // 手动设置彩虹屁
     config.caihongpi = []
