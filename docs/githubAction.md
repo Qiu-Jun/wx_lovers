@@ -43,7 +43,6 @@ on:
     - 微信公众号(配置公众号可以切换server分支看md)
         - appid
         - 密钥
-        - token
         - 模板id
         - [点击链接申请测试公众号](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login)
     - 天行数据
@@ -59,7 +58,6 @@ on:
 + (你fork的仓库>`Settings`>`Secrets and variables`>`Actions`)添加变量(以设置WXAPPID为例子，其他都一样的方式)
     - WXAPPID 微信公众号的appid
     - WXSECRET 微信公众号的密钥
-    - WXTOKEN 微信公众号的token
     - TEMPLATEID 微信公众号的模板id
     - TIANXINGKEY 第三方天行的的key
     - AMAPKEY 地图的key，用于获取天气
@@ -71,3 +69,6 @@ on:
     - 启动action
     - 找到Timer
     - run workflow
+
+#### warning
+使用git action不需要配置公众号的域名和token，因为这里没用上公众号的菜单等功能，不需要校验域名
