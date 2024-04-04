@@ -17,4 +17,4 @@
 #### github action部署
 [关于github action请查看](./docs/githubAction.md)
 
-> 不会的话可以加我微信`June_QIU_0324`(不随便加人，备注下添加理由)或者提`issue`
+> 不会可以提issue
