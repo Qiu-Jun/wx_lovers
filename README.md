@@ -1,3 +1,5 @@
+> 基于nodejs的微信公众号消息推送，用于情侣之间消息推送. main分支是基于github action的计划任务，而server分支是node的计划任务
+
 <img src="./gitPic/el.jpeg" width="30%" />
 
 ### 注意
